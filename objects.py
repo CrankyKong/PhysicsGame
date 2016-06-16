@@ -47,7 +47,7 @@ class Dir(object):
 
 class Slime(Mobile):
     frames = {
-        Actions.IDLE: [(x * 17 + 7, 24 * 1, 24, 24) for x in xrange(0, 10)],
+        Actions.IDLE: [(x * 20 , 24 * 1, 20, 24) for x in xrange(0, 3)],
         Actions.TAUNT: [(x * 48, 48 * 1, 48, 48) for x in xrange(0, 10)],
         Actions.WALK: [(x * 48, 48 * 2, 48, 48) for x in xrange(0, 10)],
         Actions.ATTACK: [(x * 48, 48 * 3, 48, 48) for x in xrange(0, 10)],
@@ -112,5 +112,5 @@ class Slime(Mobile):
         #		else:
         #			self.action = Actions.IDLE
 
-        self.frame = (self.frame + 0.3) % 10
+        self.frame = (self.frame + 0.05) % 3
         self.sprite = self.frames[self.action][int(self.frame)]
