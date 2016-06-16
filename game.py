@@ -28,7 +28,7 @@ screen = pygame.display.set_mode((400, 400), pygame.DOUBLEBUF | pygame.HWSURFACE
 current_map = map.sample_map()
 graphics.set_map(current_map)
 
-minotaur = objects.Minotaur()
+minotaur = objects.Slime()
 minotaur.x = 200
 minotaur.y = 200
 # minotaur.move_to(20, 100)

@@ -45,9 +45,9 @@ class Dir(object):
     RIGHT = 8
 
 
-class Minotaur(Mobile):
+class Slime(Mobile):
     frames = {
-        Actions.IDLE: [(x * 48, 40 * 0, 48, 48) for x in xrange(0, 10)],
+        Actions.IDLE: [(x * 17 + 7, 24 * 1, 24, 24) for x in xrange(0, 10)],
         Actions.TAUNT: [(x * 48, 48 * 1, 48, 48) for x in xrange(0, 10)],
         Actions.WALK: [(x * 48, 48 * 2, 48, 48) for x in xrange(0, 10)],
         Actions.ATTACK: [(x * 48, 48 * 3, 48, 48) for x in xrange(0, 10)],
@@ -55,8 +55,8 @@ class Minotaur(Mobile):
     }
 
     def __init__(self):
-        super(Minotaur, self).__init__(
-            graphics.load_image(os.path.join("img", "minotaur spritesheet calciumtrice.png")))
+        super(Slime, self).__init__(
+            graphics.load_image(os.path.join("img", "Slime_First Gen_Weak.png")))
         self.sprite = (0, 0, 48, 48)
         self.waypoints = []
 
