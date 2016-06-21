@@ -28,15 +28,15 @@ screen = pygame.display.set_mode((400, 400), pygame.DOUBLEBUF | pygame.HWSURFACE
 current_map = map.sample_map()
 graphics.set_map(current_map)
 
-minotaur = objects.Slime()
-minotaur.x = 200
-minotaur.y = 200
+slime = objects.Slime()
+slime.x = 200
+slime.y = 200
 # minotaur.move_to(20, 100)
 # minotaur.move_to(250, 100)
 # minotaur.move_to(100, 150)
-events.register(pygame.KEYDOWN, minotaur.key_handler)
-events.register(pygame.KEYUP, minotaur.key_handler)
-graphics.add_sprite(minotaur)
+events.register(pygame.KEYDOWN, slime.key_handler)
+events.register(pygame.KEYUP, slime.key_handler)
+graphics.add_sprite(slime)
 
 clock = pygame.time.Clock()
 time_ms = 0
@@ -45,7 +45,7 @@ while run:
     time_ms += clock.tick(50)
 
     while time_ms > (20):
-        minotaur.update()
+        slime.update()
         time_ms -= 20
 
     graphics.draw(screen)
