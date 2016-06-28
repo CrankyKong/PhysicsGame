@@ -26,13 +26,13 @@ class Mobile(object):
         scalar = speed / norm
         move_v = (diff_v[0] * scalar, diff_v[1] * scalar)
 
-        return (src[0] + move_v[0], src[1] + move_v[1])
+        return src[0] + move_v[0], src[1] + move_v[1]
 
 
 class Actions(object):
     IDLE = 0
-    TAUNT = 1
-    WALK = 2
+    ROLL = 1
+    JUMP = 2
     ATTACK = 3
     DIE = 4
 
@@ -47,17 +47,16 @@ class Dir(object):
 
 class Slime(Mobile):
     frames = {
-        Actions.IDLE:   [(x * 32, 32 * 0, 32, 32) for x in xrange(0, 10)],
-        Actions.TAUNT:  [(x * 48, 48 * 1, 48, 48) for x in xrange(0, 10)],
-        Actions.WALK:   [(x * 48, 48 * 2, 48, 48) for x in xrange(0, 10)],
-        Actions.ATTACK: [(x * 48, 48 * 3, 48, 48) for x in xrange(0, 10)],
-        Actions.DIE:    [(x * 48, 48 * 4, 48, 48) for x in xrange(0, 10)],
+        Actions.IDLE:   [((9 - x) * 32, 32 * 0, 32, 32) for x in xrange(0, 10)],
+        Actions.ROLL:   [((9 - x) * 32, 32 * 1, 32, 32) for x in xrange(0, 10)],
+        Actions.JUMP:   [((9 - x) * 32, 32 * 2, 32, 32) for x in xrange(0, 10)],
+        Actions.ATTACK: [((9 - x) * 32, 32 * 3, 32, 32) for x in xrange(0, 10)],
+        Actions.DIE:    [((9 - x) * 32, 32 * 4, 32, 32) for x in xrange(0, 10)],
     }
 
     def __init__(self):
-        super(Slime, self).__init__(
-            graphics.load_image(os.path.join("img", "slime spritesheet calciumtrice.png")))
-        self.sprite = (0, 0, 48, 48)
+        super(Slime, self).__init__(graphics.load_image(os.path.join("img", "slime spritesheet calciumtrice.png")))
+        self.sprite = (0, 0, 32, 32)
         self.waypoints = []
 
         self.speed = 2
@@ -70,31 +69,8 @@ class Slime(Mobile):
     def attack(self):
         self.action = Actions.ATTACK
 
-    def move_to(self, x, y):
-        self.action = Actions.WALK
-        self.waypoints.append((x, y))
-
-    def key_handler(self, e):
-        if (e.type == pygame.KEYDOWN):
-            if (e.key == pygame.K_UP):
-                self.dir = self.dir | Dir.UP
-            elif (e.key == pygame.K_DOWN):
-                self.dir = self.dir | Dir.DOWN
-            elif (e.key == pygame.K_LEFT):
-                self.dir = self.dir | Dir.LEFT
-            elif (e.key == pygame.K_RIGHT):
-                self.dir = self.dir | Dir.RIGHT
-        else:  # This should be e.type == pygame.KEYUP
-            if (e.key == pygame.K_UP):
-                self.dir = self.dir & ~Dir.UP
-            elif (e.key == pygame.K_DOWN):
-                self.dir = self.dir & ~Dir.DOWN
-            elif (e.key == pygame.K_LEFT):
-                self.dir = self.dir & ~Dir.LEFT
-            elif (e.key == pygame.K_RIGHT):
-                self.dir = self.dir & ~Dir.RIGHT
-
-    def update(self):
+    def walk(self):
+        self.action = Actions.JUMP
         if self.dir & Dir.UP:
             self.y = self.y - self.speed
         if self.dir & Dir.DOWN:
@@ -103,6 +79,33 @@ class Slime(Mobile):
             self.x = self.x - self.speed
         if self.dir & Dir.RIGHT:
             self.x = self.x + self.speed
+
+    def move_to(self, x, y):
+        self.action = Actions.ROLL
+        self.waypoints.append((x, y))
+
+    def key_handler(self, e):
+        if e.type == pygame.KEYDOWN:
+            if e.key == pygame.K_UP:
+                self.dir = self.dir | Dir.UP
+            elif e.key == pygame.K_DOWN:
+                self.dir = self.dir | Dir.DOWN
+            elif e.key == pygame.K_LEFT:
+                self.dir = self.dir | Dir.LEFT
+            elif e.key == pygame.K_RIGHT:
+                self.dir = self.dir | Dir.RIGHT
+        else:  # This should be e.type == pygame.KEYUP
+            if e.key == pygame.K_UP:
+                self.dir = self.dir & ~Dir.UP
+            elif e.key == pygame.K_DOWN:
+                self.dir = self.dir & ~Dir.DOWN
+            elif e.key == pygame.K_LEFT:
+                self.dir = self.dir & ~Dir.LEFT
+            elif e.key == pygame.K_RIGHT:
+                self.dir = self.dir & ~Dir.RIGHT
+
+    def update(self):
+        self.walk()
 
         #		if self.waypoints:
         #			self.facing = self.waypoints[0][0] > self.x

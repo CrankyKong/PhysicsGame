@@ -29,8 +29,8 @@ current_map = map.sample_map()
 graphics.set_map(current_map)
 
 slime = objects.Slime()
-slime.x = 200
-slime.y = 200
+slime.x = 128
+slime.y = 128
 # minotaur.move_to(20, 100)
 # minotaur.move_to(250, 100)
 # minotaur.move_to(100, 150)
@@ -44,7 +44,7 @@ clock.tick()
 while run:
     time_ms += clock.tick(50)
 
-    while time_ms > (20):
+    while time_ms > 20:
         slime.update()
         time_ms -= 20
 

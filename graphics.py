@@ -8,8 +8,7 @@ current_map = None
 
 
 def add_sprite(mobile):
-    '''Add an object to the draw list
-	'''
+#Add an object to the draw list
     global sprites
     if mobile not in sprites:
         sprites.append(mobile)
