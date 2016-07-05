@@ -4,15 +4,20 @@ import map
 
 images = {}
 sprites = []
+overlay = []
 current_map = None
 
 
 def add_sprite(mobile):
-    '''Add an object to the draw list
-	'''
     global sprites
     if mobile not in sprites:
         sprites.append(mobile)
+
+
+def add_overlay(ui_element):
+    global overlay
+    if ui_element not in overlay:
+        overlay.append(ui_element)
 
 
 def set_map(newmap):
@@ -24,6 +29,12 @@ def del_sprite(mobile):
     global sprites
     if mobile in sprites:
         sprites.remove(mobile)
+
+
+def del_overlay(ui_element):
+    global overlay
+    if ui_element in overlay:
+        overlay.remove(ui_element)
 
 
 def draw_map(surface):
@@ -41,8 +52,15 @@ def draw(surface):
     for sprite in sprites:
         surface.blit(pygame.transform.flip(sprite.sprite_sheet, sprite.facing, False), (sprite.x, sprite.y),
                      sprite.sprite)
+    draw_overlay(surface)
 
     pygame.display.flip()
+
+
+def draw_overlay(surface):
+    global overlay
+    for element in overlay:
+        surface.blit(element.img, element.pos)
 
 
 def load_image(filename):

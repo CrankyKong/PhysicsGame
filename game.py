@@ -6,7 +6,7 @@ import graphics
 import objects
 import events
 import map
-
+import id
 run = True
 
 
@@ -41,6 +41,12 @@ graphics.add_sprite(slime)
 clock = pygame.time.Clock()
 time_ms = 0
 clock.tick()
+
+button = id.Button(10, 10, 32, 32, graphics.load_image(os.path.join("img", "info.png")))
+graphics.add_overlay(button)
+events.register(pygame.MOUSEBUTTONUP, button.click_handler)
+
+
 while run:
     time_ms += clock.tick(50)
 

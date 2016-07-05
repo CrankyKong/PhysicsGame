@@ -6,12 +6,19 @@ handlers = {
     pygame.QUIT: [],
     pygame.KEYUP: [],
     pygame.KEYDOWN: [],
+    pygame.MOUSEBUTTONUP: [],
 }
 
 
 def register(e_type, handler):
+    global handlers
     if handler not in handlers[e_type]:
         handlers[e_type].append(handler)
+
+def remove(e_type, handler):
+    global handlers
+    if handler in handlers(e_type):
+        handlers(e_type).remove(handler)
 
 
 def handle():
