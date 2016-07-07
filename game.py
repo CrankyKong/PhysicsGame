@@ -31,12 +31,17 @@ graphics.set_map(current_map)
 slime = objects.Slime()
 slime.x = 200
 slime.y = 200
-# minotaur.move_to(20, 100)
+
+platform = objects.Platform()
+platform.x = 200
+platform.y = 250
+# platform.move_to(20, 100)
 # minotaur.move_to(250, 100)
 # minotaur.move_to(100, 150)
 events.register(pygame.KEYDOWN, slime.key_handler)
 events.register(pygame.KEYUP, slime.key_handler)
 graphics.add_sprite(slime)
+graphics.add_sprite(platform)
 
 clock = pygame.time.Clock()
 time_ms = 0
@@ -45,6 +50,7 @@ clock.tick()
 button = id.Button(10, 10, 32, 32, graphics.load_image(os.path.join("img", "info.png")))
 graphics.add_overlay(button)
 events.register(pygame.MOUSEBUTTONUP, button.click_handler)
+
 
 
 while run:
